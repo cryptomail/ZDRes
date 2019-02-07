@@ -1,5 +1,7 @@
 var Car =  require('../Car')
 var ZDBooking = require('../reservation_service')
+var ZDSearch = require('../search_service')
+
 var assert = require('assert')
 
 Date.prototype.addHours = function(h) {
@@ -277,6 +279,32 @@ class TestBookingInput {
         console.log('runFailScenarioFive: passed.')
     }
 }
+
+class TestSearchInput {
+    async init() {
+        let self = this;
+        self.search = new ZDSearch();
+        self.booking = new ZDBooking();
+        await self.search.init();
+        await self.booking.init();
+    }
+    async run() {
+        let self = this;
+        self.init()
+        self.runKnownGood();
+    }
+
+    async runKnownGood() {
+        let self = this;
+        var start = new Date();
+        var end = new Date();
+        end = end.addHours(4);
+        await self.booking.deleteReservationsForCar(1);
+        console.log('hi')
+        let rowset = await self.search.searchCar("20.6729456","-103.7379675",start,end)
+        console.log('*****DEBUG', rowset);
+    }
+}
 (async function() {
     var validInputs = new TestValidInputsToCar();
     await validInputs.run();
@@ -287,6 +315,8 @@ class TestBookingInput {
     var goodBookingInputs = new TestBookingInput();
     await goodBookingInputs.run();
 
+    var goodSearchInput = new TestSearchInput();
+    await goodSearchInput.run();
     console.log('*****CAR AND BOOKING SUITE PASSED*****')
 
 }());
