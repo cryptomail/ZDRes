@@ -1,6 +1,6 @@
-###ZD reservation booking
+### ZD reservation booking
 
-###This was the exercise in creating a transactional reservation system.
+### This was the exercise in creating a transactional reservation system.
 
 
 Test exercises the atomic insertion into the database leveraging a sequence ID on the aggregate root id (CAR)
