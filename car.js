@@ -19,6 +19,10 @@ module.exports = class ZDCar {
     async loadCar(carid) {
         let self = this;
 
+        if((!carid) || carid < 0) {
+            console.error('*** POSSIBLE BAD INPUT TELL UI GUY TO WISE UP', carid);
+            return null;
+        }
 
         var res = await self.client.query('SELECT * FROM ZDRES.CAR WHERE ID=$1 '
             ,
