@@ -1,0 +1,15 @@
+{
+  "name": "zd",
+  "version": "1.0.0",
+  "description": "Car Search and Car Book",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joshua Teitelbaum",
+  "license": "ISC",
+  "dependencies": {
+    "assert": "1.4.1",
+    "pg": "7.8.0"
+  }
+}
