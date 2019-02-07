@@ -17,8 +17,20 @@ module.exports = class ZDBooking {
         self.client.end();
     }
 
-    async deleteReservations(carid) {
+    async isValidCarId(carid) {
+        if(!carid || carid < 0) {
+            return false;
+        }
+        return true;
+    }
+    async deleteReservationsForCar(carid) {
+
         let self = this;
+
+        if (!self.isValidCarId(carid)) {
+            console.error('deleteReservationsForCar invalid input', carid)
+            return false;
+        }
         let stmt = ' DELETE FROM ZDRES.RESERVATION WHERE CAR_ID=$1';
         let ret = await self.client.query(stmt,[carid]);
 
@@ -27,7 +39,10 @@ module.exports = class ZDBooking {
     async bookCar(uid, carid, start, stop, seq) {
         let self = this;
         let ret = null;
-
+        if (!self.isValidCarId(carid)) {
+            console.error('bookCar invalid input', carid)
+            return false;
+        }
 
 let stmt = ' INSERT INTO ZDRES.RESERVATION (\n' +
     'USER_ID, CAR_ID, START_T, STOP_T ) \n' +
@@ -75,9 +90,7 @@ let stmt = ' INSERT INTO ZDRES.RESERVATION (\n' +
 
         }
     }
-//().catch(e => console.error(e.stack))
-  //      return ret;
-    //}
+
 
 };
 
